@@ -1,0 +1,113 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "id": {
+      "pattern": "^[a-zA-Z0-9_-]{1,64}$",
+      "title": "Id",
+      "type": "string"
+    },
+    "base_url": {
+      "maxLength": 512,
+      "title": "Base Url",
+      "type": "string"
+    },
+    "provider": {
+      "default": "openai-compatible",
+      "enum": [
+        "openai-compatible",
+        "wafer",
+        "local-test"
+      ],
+      "title": "Provider",
+      "type": "string"
+    },
+    "model": {
+      "maxLength": 256,
+      "minLength": 1,
+      "title": "Model",
+      "type": "string"
+    },
+    "key_env": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Z][A-Z0-9_]{0,63}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Key Env"
+    },
+    "require_zdr": {
+      "default": false,
+      "title": "Require Zdr",
+      "type": "boolean"
+    },
+    "streaming": {
+      "default": false,
+      "title": "Streaming",
+      "type": "boolean"
+    },
+    "timeout_s": {
+      "default": 15,
+      "exclusiveMinimum": 0,
+      "maximum": 120,
+      "title": "Timeout S",
+      "type": "number"
+    },
+    "temperature": {
+      "anyOf": [
+        {
+          "maximum": 2,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Temperature"
+    },
+    "seed": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Seed"
+    },
+    "supported_parameters": {
+      "items": {
+        "enum": [
+          "temperature",
+          "seed",
+          "max_tokens",
+          "stream"
+        ],
+        "type": "string"
+      },
+      "title": "Supported Parameters",
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "base_url",
+    "model"
+  ],
+  "title": "EndpointSpec",
+  "type": "object"
+}

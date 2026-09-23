@@ -1,0 +1,99 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "worker_id": {
+      "title": "Worker Id",
+      "type": "string"
+    },
+    "config_id": {
+      "title": "Config Id",
+      "type": "string"
+    },
+    "generation": {
+      "minimum": 0,
+      "title": "Generation",
+      "type": "integer"
+    },
+    "ready": {
+      "title": "Ready",
+      "type": "boolean"
+    },
+    "accepting": {
+      "title": "Accepting",
+      "type": "boolean"
+    },
+    "in_flight": {
+      "minimum": 0,
+      "title": "In Flight",
+      "type": "integer"
+    },
+    "device_uuid": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Device Uuid"
+    },
+    "device_model": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Device Model"
+    },
+    "process_id": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Process Id"
+    },
+    "observed_at_unix_s": {
+      "title": "Observed At Unix S",
+      "type": "number"
+    },
+    "resource_evidence": {
+      "default": "unknown",
+      "enum": [
+        "independently-observed",
+        "operator-provided",
+        "synthetic",
+        "unknown"
+      ],
+      "title": "Resource Evidence",
+      "type": "string"
+    }
+  },
+  "required": [
+    "worker_id",
+    "config_id",
+    "generation",
+    "ready",
+    "accepting",
+    "in_flight",
+    "observed_at_unix_s"
+  ],
+  "title": "WorkerSnapshot",
+  "type": "object"
+}

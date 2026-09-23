@@ -1,0 +1,54 @@
+import {test,expect} from '@playwright/test';
+import path from 'node:path';
+
+test('compute, inspect, import, replay and handle errors without external calls',async({page})=>{
+  const errors:string[]=[];
+  const external:string[]=[];
+  page.on('pageerror',e=>errors.push(e.message));
+  page.on('request',r=>{if(!r.url().startsWith('http://127.0.0.1:8765'))external.push(r.url());});
+  await page.goto('/');
+  await expect(page.getByRole('heading',{name:'Should we deploy the faster configuration now?'})).toBeVisible();
+  await expect(page.getByRole('heading',{name:'The answer starts with a run.'})).toBeVisible();
+  await page.getByRole('button',{name:'Compare four policies'}).click();
+  await expect(page.getByRole('status',{name:'Experiment status'})).toContainText('Four runs computed',{timeout:30000});
+  await expect(page.getByRole('img',{name:'Cumulative SLO-qualified completions from raw events'})).toBeVisible();
+  await page.screenshot({path:'../demo/desktop.png',fullPage:true});
+  await page.getByRole('button',{name:'Replay events'}).click();
+  await page.getByLabel('Playback speed').selectOption('4');
+  await page.getByRole('button',{name:'Inspect Evidence',exact:false}).click();
+  await expect(page.getByRole('heading',{name:'Raw event excerpt'})).toBeVisible();
+  const downloadPromise=page.waitForEvent('download');
+  await page.getByRole('link',{name:'Export evidence ZIP'}).click();
+  const download=await downloadPromise;
+  const zip=path.resolve('../work/browser-export.zip');
+  await download.saveAs(zip);
+  await page.getByRole('button',{name:'Run on Your Setup',exact:false}).click();
+  await expect(page.getByText('No endpoint authorized',{exact:true})).toBeVisible();
+  await page.getByLabel('Choose evidence ZIP').setInputFiles(zip);
+  await expect(page.getByText(/Integrity verified/)).toBeVisible();
+  await page.getByRole('button',{name:'Replay imported evidence'}).click();
+  await expect(page.getByText('RECORDED_REPLAY · synthetic',{exact:true})).toBeVisible();
+  await page.getByRole('button',{name:'Run on Your Setup',exact:false}).click();
+  await page.getByLabel('Choose evidence ZIP').setInputFiles({name:'bad.zip',mimeType:'application/zip',buffer:Buffer.from('not a ZIP')});
+  await expect(page.getByRole('alert')).toBeVisible();
+  expect(errors).toEqual([]);
+  expect(external).toEqual([]);
+});
+
+test('narrow viewport, keyboard navigation and cancellation',async({page})=>{
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('/');
+  await page.keyboard.press('Tab');
+  await expect(page.getByRole('link',{name:'TransitionBench home'})).toBeFocused();
+  await page.getByRole('combobox',{name:'Workload',exact:true}).selectOption('short');
+  await page.getByRole('button',{name:'Compare four policies'}).click();
+  await page.getByRole('button',{name:'Cancel run',exact:true}).click();
+  await expect(page.getByRole('status',{name:'Experiment status'})).toContainText('Cancelled',{timeout:30000});
+  await page.getByRole('button',{name:'Compare four policies'}).click();
+  await expect(page.getByRole('status',{name:'Experiment status'})).toContainText('Four runs computed',{timeout:30000});
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);
+  await page.screenshot({path:'../demo/mobile.png',fullPage:true});
+  await page.getByRole('button',{name:'Run on Your Setup',exact:false}).click();
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);
+  await page.screenshot({path:'../demo/setup-mobile.png',fullPage:true});
+});

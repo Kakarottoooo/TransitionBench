@@ -1,0 +1,55 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "complete_probe_sequence": {
+      "default": false,
+      "title": "Complete Probe Sequence",
+      "type": "boolean"
+    },
+    "samples_per_class": {
+      "default": 2,
+      "enum": [
+        2,
+        4
+      ],
+      "title": "Samples Per Class",
+      "type": "integer"
+    },
+    "max_requests": {
+      "default": 24,
+      "maximum": 96,
+      "minimum": 12,
+      "title": "Max Requests",
+      "type": "integer"
+    },
+    "max_duration_s": {
+      "default": 45,
+      "exclusiveMinimum": 0,
+      "maximum": 300,
+      "title": "Max Duration S",
+      "type": "number"
+    },
+    "relative_tolerance": {
+      "default": 0.1,
+      "maximum": 0.5,
+      "minimum": 0,
+      "title": "Relative Tolerance",
+      "type": "number"
+    },
+    "absolute_tolerance_s": {
+      "default": 0.005,
+      "maximum": 0.1,
+      "minimum": 0,
+      "title": "Absolute Tolerance S",
+      "type": "number"
+    }
+  },
+  "title": "WarmupSpec",
+  "type": "object"
+}

@@ -1,0 +1,1 @@
+{"mode":"SIMULATION","policy":"StateAware","workload":{"kind":"prefix-shift","seed":101,"split":"test","rate_rps":9,"injection_s":30},"slo":{"e2e_s":2,"first_content_s":1},"observation_s":40,"drain_s":10,"horizon_s":40,"transition_s":3}

@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+.pytest_cache/
+node_modules/
+*.egg-info/
+.transitionbench/
+work/
+dist/
+sdk/dist/
+test-results/
+playwright-report/
+*.db*
+.env
+.env.*
+!.env.example
+verified-v4/

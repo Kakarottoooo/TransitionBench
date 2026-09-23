@@ -1,0 +1,62 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "max_requests": {
+      "default": 500,
+      "maximum": 20000,
+      "minimum": 1,
+      "title": "Max Requests",
+      "type": "integer"
+    },
+    "max_total_tokens": {
+      "default": 2000000,
+      "maximum": 20000000,
+      "minimum": 1,
+      "title": "Max Total Tokens",
+      "type": "integer"
+    },
+    "max_output_tokens": {
+      "default": 32,
+      "maximum": 4096,
+      "minimum": 1,
+      "title": "Max Output Tokens",
+      "type": "integer"
+    },
+    "max_concurrency": {
+      "default": 16,
+      "maximum": 256,
+      "minimum": 1,
+      "title": "Max Concurrency",
+      "type": "integer"
+    },
+    "max_duration_s": {
+      "default": 120,
+      "exclusiveMinimum": 0,
+      "maximum": 3600,
+      "title": "Max Duration S",
+      "type": "number"
+    },
+    "reserved_gpus": {
+      "default": 2,
+      "maximum": 2,
+      "minimum": 0,
+      "title": "Reserved Gpus",
+      "type": "integer"
+    },
+    "max_reserved_gpu_seconds": {
+      "default": 240,
+      "maximum": 7200,
+      "minimum": 0,
+      "title": "Max Reserved Gpu Seconds",
+      "type": "number"
+    }
+  },
+  "title": "ResourceBudget",
+  "type": "object"
+}

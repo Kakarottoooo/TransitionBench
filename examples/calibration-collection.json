@@ -1,0 +1,20 @@
+{
+  "id": "host1-short-v1",
+  "experiment": {
+    "mode": "CONTROLLED_ROLLOUT",
+    "endpoint_id": "owned-lab",
+    "workload": {"kind": "short", "seed": 11, "split": "calibration", "rate_rps": 2, "injection_s": 60},
+    "observation_s": 90,
+    "drain_s": 30,
+    "budget": {"max_requests": 300, "max_total_tokens": 1000000, "max_output_tokens": 32,
+      "max_concurrency": 8, "max_duration_s": 240, "reserved_gpus": 2, "max_reserved_gpu_seconds": 480}
+  },
+  "calibration_seeds": [11, 12, 13],
+  "tuning_seeds": [21, 22],
+  "test_seeds": [101, 102, 103, 104, 105],
+  "transition_kinds": ["short"],
+  "transition_at_s": 2,
+  "max_wall_s": 3600,
+  "max_requests": 16000,
+  "max_total_tokens": 40000000
+}

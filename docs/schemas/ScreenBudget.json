@@ -1,0 +1,57 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "machine_hourly_usd": {
+      "exclusiveMinimum": 0,
+      "maximum": 1000,
+      "title": "Machine Hourly Usd",
+      "type": "number"
+    },
+    "spending_limit_usd": {
+      "exclusiveMinimum": 0,
+      "maximum": 100,
+      "title": "Spending Limit Usd",
+      "type": "number"
+    },
+    "non_compute_allowance_usd": {
+      "default": 0.5,
+      "maximum": 100,
+      "minimum": 0.5,
+      "title": "Non Compute Allowance Usd",
+      "type": "number"
+    },
+    "setup_allowance_s": {
+      "default": 600,
+      "maximum": 3600,
+      "minimum": 600,
+      "title": "Setup Allowance S",
+      "type": "number"
+    },
+    "export_allowance_s": {
+      "default": 300,
+      "maximum": 3600,
+      "minimum": 300,
+      "title": "Export Allowance S",
+      "type": "number"
+    },
+    "stop_reserve_s": {
+      "default": 210,
+      "maximum": 600,
+      "minimum": 210,
+      "title": "Stop Reserve S",
+      "type": "number"
+    }
+  },
+  "required": [
+    "machine_hourly_usd",
+    "spending_limit_usd"
+  ],
+  "title": "ScreenBudget",
+  "type": "object"
+}

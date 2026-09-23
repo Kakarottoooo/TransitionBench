@@ -1,0 +1,470 @@
+{
+  "$defs": {
+    "ExperimentSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "mode": {
+          "$ref": "#/$defs/Mode",
+          "default": "SIMULATION"
+        },
+        "workload": {
+          "$ref": "#/$defs/WorkloadSpec"
+        },
+        "slo": {
+          "$ref": "#/$defs/SLOSpec"
+        },
+        "budget": {
+          "$ref": "#/$defs/ResourceBudget"
+        },
+        "policy": {
+          "default": "StateAware",
+          "enum": [
+            "StaticBest",
+            "SteadyStateFirst",
+            "FixedHysteresis",
+            "StateAware"
+          ],
+          "title": "Policy",
+          "type": "string"
+        },
+        "horizon_s": {
+          "default": 40,
+          "exclusiveMinimum": 0,
+          "maximum": 3600,
+          "title": "Horizon S",
+          "type": "number"
+        },
+        "observation_s": {
+          "default": 40,
+          "exclusiveMinimum": 0,
+          "maximum": 3600,
+          "title": "Observation S",
+          "type": "number"
+        },
+        "drain_s": {
+          "default": 10,
+          "maximum": 120,
+          "minimum": 0,
+          "title": "Drain S",
+          "type": "number"
+        },
+        "max_dispatch_lag_s": {
+          "default": 0.1,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Max Dispatch Lag S",
+          "type": "number"
+        },
+        "min_practical_gain_requests": {
+          "default": 2,
+          "minimum": 0,
+          "title": "Min Practical Gain Requests",
+          "type": "number"
+        },
+        "transition_s": {
+          "default": 3,
+          "maximum": 60,
+          "minimum": 0,
+          "title": "Transition S",
+          "type": "number"
+        },
+        "endpoint_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Endpoint Id"
+        },
+        "replay_bundle_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Replay Bundle Id"
+        },
+        "plan_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Plan Id"
+        },
+        "calibration_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Calibration Id"
+        }
+      },
+      "title": "ExperimentSpec",
+      "type": "object"
+    },
+    "Mode": {
+      "enum": [
+        "SIMULATION",
+        "RECORDED_REPLAY",
+        "LIVE_ENDPOINT",
+        "CONTROLLED_ROLLOUT"
+      ],
+      "title": "Mode",
+      "type": "string"
+    },
+    "ResourceBudget": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "max_requests": {
+          "default": 500,
+          "maximum": 20000,
+          "minimum": 1,
+          "title": "Max Requests",
+          "type": "integer"
+        },
+        "max_total_tokens": {
+          "default": 2000000,
+          "maximum": 20000000,
+          "minimum": 1,
+          "title": "Max Total Tokens",
+          "type": "integer"
+        },
+        "max_output_tokens": {
+          "default": 32,
+          "maximum": 4096,
+          "minimum": 1,
+          "title": "Max Output Tokens",
+          "type": "integer"
+        },
+        "max_concurrency": {
+          "default": 16,
+          "maximum": 256,
+          "minimum": 1,
+          "title": "Max Concurrency",
+          "type": "integer"
+        },
+        "max_duration_s": {
+          "default": 120,
+          "exclusiveMinimum": 0,
+          "maximum": 3600,
+          "title": "Max Duration S",
+          "type": "number"
+        },
+        "reserved_gpus": {
+          "default": 2,
+          "maximum": 2,
+          "minimum": 0,
+          "title": "Reserved Gpus",
+          "type": "integer"
+        },
+        "max_reserved_gpu_seconds": {
+          "default": 240,
+          "maximum": 7200,
+          "minimum": 0,
+          "title": "Max Reserved Gpu Seconds",
+          "type": "number"
+        }
+      },
+      "title": "ResourceBudget",
+      "type": "object"
+    },
+    "SLOSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "e2e_s": {
+          "default": 2,
+          "exclusiveMinimum": 0,
+          "title": "E2E S",
+          "type": "number"
+        },
+        "first_content_s": {
+          "default": 1,
+          "exclusiveMinimum": 0,
+          "title": "First Content S",
+          "type": "number"
+        }
+      },
+      "title": "SLOSpec",
+      "type": "object"
+    },
+    "WarmupSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "complete_probe_sequence": {
+          "default": false,
+          "title": "Complete Probe Sequence",
+          "type": "boolean"
+        },
+        "samples_per_class": {
+          "default": 2,
+          "enum": [
+            2,
+            4
+          ],
+          "title": "Samples Per Class",
+          "type": "integer"
+        },
+        "max_requests": {
+          "default": 24,
+          "maximum": 96,
+          "minimum": 12,
+          "title": "Max Requests",
+          "type": "integer"
+        },
+        "max_duration_s": {
+          "default": 45,
+          "exclusiveMinimum": 0,
+          "maximum": 300,
+          "title": "Max Duration S",
+          "type": "number"
+        },
+        "relative_tolerance": {
+          "default": 0.1,
+          "maximum": 0.5,
+          "minimum": 0,
+          "title": "Relative Tolerance",
+          "type": "number"
+        },
+        "absolute_tolerance_s": {
+          "default": 0.005,
+          "maximum": 0.1,
+          "minimum": 0,
+          "title": "Absolute Tolerance S",
+          "type": "number"
+        }
+      },
+      "title": "WarmupSpec",
+      "type": "object"
+    },
+    "WorkloadSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "kind": {
+          "default": "prefix-shift",
+          "enum": [
+            "long-prefix",
+            "short",
+            "prefix-shift",
+            "mixed-burst"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "long_prefix_mode": {
+          "default": "legacy",
+          "enum": [
+            "legacy",
+            "shared",
+            "unique"
+          ],
+          "title": "Long Prefix Mode",
+          "type": "string"
+        },
+        "seed": {
+          "default": 101,
+          "minimum": 0,
+          "title": "Seed",
+          "type": "integer"
+        },
+        "split": {
+          "default": "test",
+          "enum": [
+            "calibration",
+            "tuning",
+            "test"
+          ],
+          "title": "Split",
+          "type": "string"
+        },
+        "rate_rps": {
+          "default": 6,
+          "exclusiveMinimum": 0,
+          "maximum": 500,
+          "title": "Rate Rps",
+          "type": "number"
+        },
+        "injection_s": {
+          "default": 30,
+          "exclusiveMinimum": 0,
+          "maximum": 1800,
+          "title": "Injection S",
+          "type": "number"
+        },
+        "arrival_model": {
+          "default": "open-loop",
+          "enum": [
+            "open-loop",
+            "scripted-session"
+          ],
+          "title": "Arrival Model",
+          "type": "string"
+        },
+        "think_s": {
+          "default": 0.1,
+          "maximum": 60,
+          "minimum": 0,
+          "title": "Think S",
+          "type": "number"
+        }
+      },
+      "title": "WorkloadSpec",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "experiment": {
+      "$ref": "#/$defs/ExperimentSpec"
+    },
+    "warmup": {
+      "$ref": "#/$defs/WarmupSpec"
+    },
+    "calibration_seeds": {
+      "items": {
+        "type": "integer"
+      },
+      "maxItems": 30,
+      "minItems": 3,
+      "title": "Calibration Seeds",
+      "type": "array"
+    },
+    "tuning_seeds": {
+      "items": {
+        "type": "integer"
+      },
+      "maxItems": 30,
+      "minItems": 2,
+      "title": "Tuning Seeds",
+      "type": "array"
+    },
+    "test_seeds": {
+      "items": {
+        "type": "integer"
+      },
+      "maxItems": 30,
+      "minItems": 3,
+      "title": "Test Seeds",
+      "type": "array"
+    },
+    "order_seed": {
+      "default": 713,
+      "minimum": 0,
+      "title": "Order Seed",
+      "type": "integer"
+    },
+    "machine_hourly_usd": {
+      "exclusiveMinimum": 0,
+      "maximum": 1000,
+      "title": "Machine Hourly Usd",
+      "type": "number"
+    },
+    "spending_limit_usd": {
+      "exclusiveMinimum": 0,
+      "maximum": 10000,
+      "title": "Spending Limit Usd",
+      "type": "number"
+    },
+    "non_compute_allowance_usd": {
+      "default": 0,
+      "maximum": 10000,
+      "minimum": 0,
+      "title": "Non Compute Allowance Usd",
+      "type": "number"
+    },
+    "setup_allowance_s": {
+      "default": 1800,
+      "maximum": 86400,
+      "minimum": 0,
+      "title": "Setup Allowance S",
+      "type": "number"
+    },
+    "calibration_allowance_s": {
+      "default": 3600,
+      "exclusiveMinimum": 0,
+      "maximum": 86400,
+      "title": "Calibration Allowance S",
+      "type": "number"
+    },
+    "tuning_allowance_s": {
+      "default": 1800,
+      "exclusiveMinimum": 0,
+      "maximum": 86400,
+      "title": "Tuning Allowance S",
+      "type": "number"
+    },
+    "reset_allowance_per_trial_s": {
+      "default": 60,
+      "maximum": 3600,
+      "minimum": 0,
+      "title": "Reset Allowance Per Trial S",
+      "type": "number"
+    },
+    "export_teardown_allowance_s": {
+      "default": 300,
+      "exclusiveMinimum": 0,
+      "maximum": 3600,
+      "title": "Export Teardown Allowance S",
+      "type": "number"
+    }
+  },
+  "required": [
+    "machine_hourly_usd",
+    "spending_limit_usd"
+  ],
+  "title": "StudyPreparation",
+  "type": "object"
+}

@@ -1,0 +1,29 @@
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "transitionbench"
+version = "0.4.4"
+description = "Transition-aware inference experiments with inspectable evidence"
+requires-python = ">=3.11,<3.14"
+# HTTPcore probes sniffio in its hot path; avoid repeated failed filesystem imports.
+dependencies = ["fastapi==0.115.12", "pydantic==2.11.7", "httpx==0.28.1", "httpcore==1.0.9", "uvicorn==0.34.3", "mcp==1.26.0", "sniffio==1.3.1"]
+
+[project.scripts]
+transitionbench = "transitionbench.cli:main"
+transitionbench-mcp = "transitionbench.mcp_server:main"
+
+[dependency-groups]
+dev = ["pytest==8.4.1", "pytest-asyncio==1.0.0", "build==1.2.2.post1"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/transitionbench"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/transitionbench", "tests", "docs", "examples", "scripts", "web/src", "web/public", "web/package.json", "web/package-lock.json", "web/tsconfig.json", "web/vite.config.ts", "sdk/src", "sdk/package.json", "sdk/package-lock.json", "sdk/tsconfig.json", "README.md", "README.zh-CN.md", "pyproject.toml", "uv.lock"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+markers = ["cpu: no model or GPU required", "gpu: requires two authorized GPUs", "live_provider: requires authorized provider"]

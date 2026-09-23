@@ -1,0 +1,53 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "bundle_ids": {
+      "items": {
+        "pattern": "^[a-f0-9]{32}$",
+        "type": "string"
+      },
+      "maxItems": 36,
+      "minItems": 3,
+      "title": "Bundle Ids",
+      "type": "array"
+    },
+    "horizon_s": {
+      "default": 120,
+      "exclusiveMinimum": 0,
+      "maximum": 3600,
+      "title": "Horizon S",
+      "type": "number"
+    },
+    "steady_window_s": {
+      "default": 30,
+      "exclusiveMinimum": 0,
+      "maximum": 3600,
+      "title": "Steady Window S",
+      "type": "number"
+    },
+    "uncertainty_requests": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Uncertainty Requests",
+      "type": "number"
+    },
+    "max_evidence_age_s": {
+      "default": 86400,
+      "exclusiveMinimum": 0,
+      "maximum": 2592000,
+      "title": "Max Evidence Age S",
+      "type": "number"
+    }
+  },
+  "required": [
+    "bundle_ids"
+  ],
+  "title": "AutoReviewInput",
+  "type": "object"
+}

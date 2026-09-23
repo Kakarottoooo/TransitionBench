@@ -1,0 +1,1 @@
+{"name":"@transitionbench/local-client","version":"0.1.0","private":false,"type":"module","description":"Local HTTP client; does not bundle GPU orchestration","exports":{".":{"types":"./dist/index.d.ts","import":"./dist/index.js"}},"files":["dist"],"scripts":{"build":"tsc"},"devDependencies":{"typescript":"5.9.2"}}

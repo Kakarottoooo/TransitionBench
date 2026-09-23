@@ -1,0 +1,1 @@
+{"experimental_authority":false,"license_reviewed":false,"owner_id":"replaceowner","image_digest":"RESOLVE_vllm/vllm-openai:v0.11.0_TO_IMMUTABLE_DIGEST","cache_directory":"/absolute/operator-owned/cache","workers":[{"device_uuid":"GPU-REPLACE_FIRST_UUID","port":8801},{"device_uuid":"GPU-REPLACE_SECOND_UUID","port":8802}]}

@@ -1,0 +1,25 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "e2e_s": {
+      "default": 2,
+      "exclusiveMinimum": 0,
+      "title": "E2E S",
+      "type": "number"
+    },
+    "first_content_s": {
+      "default": 1,
+      "exclusiveMinimum": 0,
+      "title": "First Content S",
+      "type": "number"
+    }
+  },
+  "title": "SLOSpec",
+  "type": "object"
+}

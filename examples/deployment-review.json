@@ -1,0 +1,28 @@
+{
+  "settings": {
+    "current_config": "A",
+    "candidate_config": "B",
+    "expected_context": "a54e6fa9b2e992edae77a8155ea4761340ceb4cc004becf56abbb6257bd9583f",
+    "horizon_s": 120,
+    "steady_window_s": 30,
+    "uncertainty_requests": 0,
+    "max_evidence_age_s": 2592000
+  },
+  "pairs": [
+    {
+      "current": "../web/public/examples/deployment-review/calibration-7701-keep.zip",
+      "candidate": "../web/public/examples/deployment-review/calibration-7701-candidate_reference.zip",
+      "transition": "../web/public/examples/deployment-review/calibration-7701-forced.zip"
+    },
+    {
+      "current": "../web/public/examples/deployment-review/calibration-7702-keep.zip",
+      "candidate": "../web/public/examples/deployment-review/calibration-7702-candidate_reference.zip",
+      "transition": "../web/public/examples/deployment-review/calibration-7702-forced.zip"
+    },
+    {
+      "current": "../web/public/examples/deployment-review/calibration-7703-keep.zip",
+      "candidate": "../web/public/examples/deployment-review/calibration-7703-candidate_reference.zip",
+      "transition": "../web/public/examples/deployment-review/calibration-7703-forced.zip"
+    }
+  ]
+}

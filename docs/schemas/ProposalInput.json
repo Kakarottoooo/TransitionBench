@@ -1,0 +1,120 @@
+{
+  "$defs": {
+    "EvidencePair": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "current": {
+          "pattern": "^[a-f0-9]{32}$",
+          "title": "Current",
+          "type": "string"
+        },
+        "candidate": {
+          "pattern": "^[a-f0-9]{32}$",
+          "title": "Candidate",
+          "type": "string"
+        },
+        "transition": {
+          "pattern": "^[a-f0-9]{32}$",
+          "title": "Transition",
+          "type": "string"
+        }
+      },
+      "required": [
+        "current",
+        "candidate",
+        "transition"
+      ],
+      "title": "EvidencePair",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "pairs": {
+      "items": {
+        "$ref": "#/$defs/EvidencePair"
+      },
+      "maxItems": 12,
+      "minItems": 1,
+      "title": "Pairs",
+      "type": "array"
+    },
+    "current_config": {
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Current Config",
+      "type": "string"
+    },
+    "candidate_config": {
+      "maxLength": 128,
+      "minLength": 1,
+      "title": "Candidate Config",
+      "type": "string"
+    },
+    "expected_context": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Expected Context",
+      "type": "string"
+    },
+    "horizon_s": {
+      "exclusiveMinimum": 0,
+      "maximum": 3600,
+      "title": "Horizon S",
+      "type": "number"
+    },
+    "steady_window_s": {
+      "exclusiveMinimum": 0,
+      "maximum": 3600,
+      "title": "Steady Window S",
+      "type": "number"
+    },
+    "uncertainty_requests": {
+      "minimum": 0,
+      "title": "Uncertainty Requests",
+      "type": "number"
+    },
+    "min_gain_requests": {
+      "default": 2,
+      "minimum": 0,
+      "title": "Min Gain Requests",
+      "type": "number"
+    },
+    "max_evidence_age_s": {
+      "default": 86400,
+      "exclusiveMinimum": 0,
+      "maximum": 2592000,
+      "title": "Max Evidence Age S",
+      "type": "number"
+    },
+    "advice_ttl_s": {
+      "default": 300,
+      "exclusiveMinimum": 0,
+      "maximum": 3600,
+      "title": "Advice Ttl S",
+      "type": "number"
+    }
+  },
+  "required": [
+    "pairs",
+    "current_config",
+    "candidate_config",
+    "expected_context",
+    "horizon_s",
+    "steady_window_s",
+    "uncertainty_requests"
+  ],
+  "title": "ProposalInput",
+  "type": "object"
+}

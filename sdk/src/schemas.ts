@@ -1,0 +1,20 @@
+// Generated from the canonical Python OpenAPI. Do not edit manually.
+export type ApprovalRequest = { "schema_version"?: "1.0"; "plan_hash": string };
+export type AutoReviewInput = { "schema_version"?: "1.0"; "bundle_ids": (string)[]; "horizon_s"?: number; "steady_window_s"?: number; "uncertainty_requests"?: number; "max_evidence_age_s"?: number };
+export type Body_upload_bundle_api_v1_bundles_import_post = { "file": string };
+export type ComparisonRequest = { "schema_version"?: "1.0"; "run_ids": (string)[] };
+export type DecisionInput = { "schema_version"?: "1.0"; "current_goodput_rps": number; "candidate_goodput_rps": number; "transition_deficit_requests"?: number | null; "deficit_reference"?: "candidate-steady"; "horizon_s": number; "min_gain_requests"?: number; "uncertainty_requests"?: number | null; "state_known"?: boolean; "out_of_distribution"?: boolean; "evidence_ids"?: (string)[]; "origin"?: "synthetic" | "measured-black-box" | "measured-controlled" };
+export type EndpointSpec = { "schema_version"?: "1.0"; "id": string; "base_url": string; "provider"?: "openai-compatible" | "wafer" | "local-test"; "model": string; "key_env"?: string | null; "require_zdr"?: boolean; "streaming"?: boolean; "timeout_s"?: number; "temperature"?: number | null; "seed"?: number | null; "supported_parameters"?: ("temperature" | "seed" | "max_tokens" | "stream")[] };
+export type EvidencePair = { "schema_version"?: "1.0"; "current": string; "candidate": string; "transition": string };
+export type ExperimentSpec = { "schema_version"?: "1.0"; "mode"?: Mode; "workload"?: WorkloadSpec; "slo"?: SLOSpec; "budget"?: ResourceBudget; "policy"?: "StaticBest" | "SteadyStateFirst" | "FixedHysteresis" | "StateAware"; "horizon_s"?: number; "observation_s"?: number; "drain_s"?: number; "max_dispatch_lag_s"?: number; "min_practical_gain_requests"?: number; "transition_s"?: number; "endpoint_id"?: string | null; "replay_bundle_id"?: string | null; "plan_id"?: string | null; "calibration_id"?: string | null };
+export type HTTPValidationError = { "detail"?: (ValidationError)[] };
+export type ImportedEvidence = { "schema_version"?: "1.0"; "bundle_ids": (string)[] };
+export type Mode = "SIMULATION" | "RECORDED_REPLAY" | "LIVE_ENDPOINT" | "CONTROLLED_ROLLOUT";
+export type OutcomeInput = { "schema_version"?: "1.0"; "pairs": (EvidencePair)[] };
+export type PlanRequest = { "schema_version"?: "1.0"; "config_id": string; "budget": ResourceBudget; "warmup"?: WarmupSpec };
+export type ProposalInput = { "schema_version"?: "1.0"; "pairs": (EvidencePair)[]; "current_config": string; "candidate_config": string; "expected_context": string; "horizon_s": number; "steady_window_s": number; "uncertainty_requests": number; "min_gain_requests"?: number; "max_evidence_age_s"?: number; "advice_ttl_s"?: number };
+export type ResourceBudget = { "schema_version"?: "1.0"; "max_requests"?: number; "max_total_tokens"?: number; "max_output_tokens"?: number; "max_concurrency"?: number; "max_duration_s"?: number; "reserved_gpus"?: number; "max_reserved_gpu_seconds"?: number };
+export type SLOSpec = { "schema_version"?: "1.0"; "e2e_s"?: number; "first_content_s"?: number };
+export type ValidationError = { "loc": (string | number)[]; "msg": string; "type": string };
+export type WarmupSpec = { "schema_version"?: "1.0"; "complete_probe_sequence"?: boolean; "samples_per_class"?: 2 | 4; "max_requests"?: number; "max_duration_s"?: number; "relative_tolerance"?: number; "absolute_tolerance_s"?: number };
+export type WorkloadSpec = { "schema_version"?: "1.0"; "kind"?: "long-prefix" | "short" | "prefix-shift" | "mixed-burst"; "long_prefix_mode"?: "legacy" | "shared" | "unique"; "seed"?: number; "split"?: "calibration" | "tuning" | "test"; "rate_rps"?: number; "injection_s"?: number; "arrival_model"?: "open-loop" | "scripted-session"; "think_s"?: number };

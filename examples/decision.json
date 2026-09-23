@@ -1,0 +1,1 @@
+{"current_goodput_rps":10,"candidate_goodput_rps":12,"transition_deficit_requests":30,"deficit_reference":"candidate-steady","horizon_s":20,"uncertainty_requests":3,"evidence_ids":["illustrative-calibration"],"origin":"synthetic"}

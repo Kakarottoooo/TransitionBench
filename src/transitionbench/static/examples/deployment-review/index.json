@@ -1,0 +1,24 @@
+{
+  "files": [
+    "calibration-7701-keep.zip",
+    "calibration-7701-candidate_reference.zip",
+    "calibration-7701-forced.zip",
+    "calibration-7702-keep.zip",
+    "calibration-7702-candidate_reference.zip",
+    "calibration-7702-forced.zip",
+    "calibration-7703-keep.zip",
+    "calibration-7703-candidate_reference.zip",
+    "calibration-7703-forced.zip"
+  ],
+  "settings": {
+    "current_config": "A",
+    "candidate_config": "B",
+    "expected_context": "a54e6fa9b2e992edae77a8155ea4761340ceb4cc004becf56abbb6257bd9583f",
+    "horizon_s": 120,
+    "steady_window_s": 30,
+    "uncertainty_requests": 0,
+    "max_evidence_age_s": 2592000
+  },
+  "source": "local-cache-calibration-v1; historical measured local GPU example, no provider requests",
+  "archive_sha256": "670dc29f83bc6da5db23ac35bf57bce9b10354564254610cab3e96f01760105d"
+}

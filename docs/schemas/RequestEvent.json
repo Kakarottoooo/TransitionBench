@@ -1,0 +1,276 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "request_id": {
+      "title": "Request Id",
+      "type": "string"
+    },
+    "workload_class": {
+      "default": "short",
+      "title": "Workload Class",
+      "type": "string"
+    },
+    "prefix_group": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Prefix Group"
+    },
+    "scheduled_s": {
+      "minimum": 0,
+      "title": "Scheduled S",
+      "type": "number"
+    },
+    "dispatch_s": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Dispatch S"
+    },
+    "first_content_s": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "First Content S"
+    },
+    "first_reasoning_s": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "First Reasoning S"
+    },
+    "final_content_s": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Final Content S"
+    },
+    "completed_s": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Completed S"
+    },
+    "chunk_times_s": {
+      "items": {
+        "type": "number"
+      },
+      "title": "Chunk Times S",
+      "type": "array"
+    },
+    "termination": {
+      "default": "unfinished",
+      "enum": [
+        "complete",
+        "client_drop",
+        "timeout",
+        "error",
+        "cancelled",
+        "unfinished",
+        "partial_stream",
+        "budget_refusal"
+      ],
+      "title": "Termination",
+      "type": "string"
+    },
+    "finish_reason": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Finish Reason"
+    },
+    "output_chars": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Output Chars",
+      "type": "integer"
+    },
+    "output_tokens": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Output Tokens"
+    },
+    "input_tokens": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Input Tokens"
+    },
+    "token_origin": {
+      "default": "unknown",
+      "enum": [
+        "server",
+        "synthetic",
+        "unknown"
+      ],
+      "title": "Token Origin",
+      "type": "string"
+    },
+    "quality_valid": {
+      "default": false,
+      "title": "Quality Valid",
+      "type": "boolean"
+    },
+    "quality_check": {
+      "default": "not-assessed",
+      "title": "Quality Check",
+      "type": "string"
+    },
+    "provider_request_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Provider Request Id"
+    },
+    "attempt": {
+      "default": 1,
+      "minimum": 1,
+      "title": "Attempt",
+      "type": "integer"
+    },
+    "status_code": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Status Code"
+    },
+    "worker_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Worker Id"
+    },
+    "config_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Config Id"
+    },
+    "scheduling_lag_s": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Scheduling Lag S"
+    },
+    "clock_domain": {
+      "default": "client-monotonic-relative",
+      "title": "Clock Domain",
+      "type": "string"
+    },
+    "origin": {
+      "default": "synthetic",
+      "enum": [
+        "synthetic",
+        "measured-black-box",
+        "measured-controlled"
+      ],
+      "title": "Origin",
+      "type": "string"
+    }
+  },
+  "required": [
+    "request_id",
+    "scheduled_s"
+  ],
+  "title": "RequestEvent",
+  "type": "object"
+}

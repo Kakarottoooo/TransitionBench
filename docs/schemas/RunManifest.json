@@ -1,0 +1,433 @@
+{
+  "$defs": {
+    "ExperimentSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "mode": {
+          "$ref": "#/$defs/Mode",
+          "default": "SIMULATION"
+        },
+        "workload": {
+          "$ref": "#/$defs/WorkloadSpec"
+        },
+        "slo": {
+          "$ref": "#/$defs/SLOSpec"
+        },
+        "budget": {
+          "$ref": "#/$defs/ResourceBudget"
+        },
+        "policy": {
+          "default": "StateAware",
+          "enum": [
+            "StaticBest",
+            "SteadyStateFirst",
+            "FixedHysteresis",
+            "StateAware"
+          ],
+          "title": "Policy",
+          "type": "string"
+        },
+        "horizon_s": {
+          "default": 40,
+          "exclusiveMinimum": 0,
+          "maximum": 3600,
+          "title": "Horizon S",
+          "type": "number"
+        },
+        "observation_s": {
+          "default": 40,
+          "exclusiveMinimum": 0,
+          "maximum": 3600,
+          "title": "Observation S",
+          "type": "number"
+        },
+        "drain_s": {
+          "default": 10,
+          "maximum": 120,
+          "minimum": 0,
+          "title": "Drain S",
+          "type": "number"
+        },
+        "max_dispatch_lag_s": {
+          "default": 0.1,
+          "exclusiveMinimum": 0,
+          "maximum": 10,
+          "title": "Max Dispatch Lag S",
+          "type": "number"
+        },
+        "min_practical_gain_requests": {
+          "default": 2,
+          "minimum": 0,
+          "title": "Min Practical Gain Requests",
+          "type": "number"
+        },
+        "transition_s": {
+          "default": 3,
+          "maximum": 60,
+          "minimum": 0,
+          "title": "Transition S",
+          "type": "number"
+        },
+        "endpoint_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Endpoint Id"
+        },
+        "replay_bundle_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Replay Bundle Id"
+        },
+        "plan_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Plan Id"
+        },
+        "calibration_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Calibration Id"
+        }
+      },
+      "title": "ExperimentSpec",
+      "type": "object"
+    },
+    "Mode": {
+      "enum": [
+        "SIMULATION",
+        "RECORDED_REPLAY",
+        "LIVE_ENDPOINT",
+        "CONTROLLED_ROLLOUT"
+      ],
+      "title": "Mode",
+      "type": "string"
+    },
+    "ResourceBudget": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "max_requests": {
+          "default": 500,
+          "maximum": 20000,
+          "minimum": 1,
+          "title": "Max Requests",
+          "type": "integer"
+        },
+        "max_total_tokens": {
+          "default": 2000000,
+          "maximum": 20000000,
+          "minimum": 1,
+          "title": "Max Total Tokens",
+          "type": "integer"
+        },
+        "max_output_tokens": {
+          "default": 32,
+          "maximum": 4096,
+          "minimum": 1,
+          "title": "Max Output Tokens",
+          "type": "integer"
+        },
+        "max_concurrency": {
+          "default": 16,
+          "maximum": 256,
+          "minimum": 1,
+          "title": "Max Concurrency",
+          "type": "integer"
+        },
+        "max_duration_s": {
+          "default": 120,
+          "exclusiveMinimum": 0,
+          "maximum": 3600,
+          "title": "Max Duration S",
+          "type": "number"
+        },
+        "reserved_gpus": {
+          "default": 2,
+          "maximum": 2,
+          "minimum": 0,
+          "title": "Reserved Gpus",
+          "type": "integer"
+        },
+        "max_reserved_gpu_seconds": {
+          "default": 240,
+          "maximum": 7200,
+          "minimum": 0,
+          "title": "Max Reserved Gpu Seconds",
+          "type": "number"
+        }
+      },
+      "title": "ResourceBudget",
+      "type": "object"
+    },
+    "SLOSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "e2e_s": {
+          "default": 2,
+          "exclusiveMinimum": 0,
+          "title": "E2E S",
+          "type": "number"
+        },
+        "first_content_s": {
+          "default": 1,
+          "exclusiveMinimum": 0,
+          "title": "First Content S",
+          "type": "number"
+        }
+      },
+      "title": "SLOSpec",
+      "type": "object"
+    },
+    "WorkloadSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "kind": {
+          "default": "prefix-shift",
+          "enum": [
+            "long-prefix",
+            "short",
+            "prefix-shift",
+            "mixed-burst"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "long_prefix_mode": {
+          "default": "legacy",
+          "enum": [
+            "legacy",
+            "shared",
+            "unique"
+          ],
+          "title": "Long Prefix Mode",
+          "type": "string"
+        },
+        "seed": {
+          "default": 101,
+          "minimum": 0,
+          "title": "Seed",
+          "type": "integer"
+        },
+        "split": {
+          "default": "test",
+          "enum": [
+            "calibration",
+            "tuning",
+            "test"
+          ],
+          "title": "Split",
+          "type": "string"
+        },
+        "rate_rps": {
+          "default": 6,
+          "exclusiveMinimum": 0,
+          "maximum": 500,
+          "title": "Rate Rps",
+          "type": "number"
+        },
+        "injection_s": {
+          "default": 30,
+          "exclusiveMinimum": 0,
+          "maximum": 1800,
+          "title": "Injection S",
+          "type": "number"
+        },
+        "arrival_model": {
+          "default": "open-loop",
+          "enum": [
+            "open-loop",
+            "scripted-session"
+          ],
+          "title": "Arrival Model",
+          "type": "string"
+        },
+        "think_s": {
+          "default": 0.1,
+          "maximum": 60,
+          "minimum": 0,
+          "title": "Think S",
+          "type": "number"
+        }
+      },
+      "title": "WorkloadSpec",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "mode": {
+      "$ref": "#/$defs/Mode"
+    },
+    "origin": {
+      "enum": [
+        "synthetic",
+        "measured-black-box",
+        "measured-controlled"
+      ],
+      "title": "Origin",
+      "type": "string"
+    },
+    "experiment": {
+      "$ref": "#/$defs/ExperimentSpec"
+    },
+    "offered_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Offered Ids",
+      "type": "array"
+    },
+    "created_at_unix_s": {
+      "title": "Created At Unix S",
+      "type": "number"
+    },
+    "versions": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Versions",
+      "type": "object"
+    },
+    "hardware": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Hardware",
+      "type": "array"
+    },
+    "resource_intervals": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Resource Intervals",
+      "type": "array"
+    },
+    "configurations": {
+      "additionalProperties": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Configurations",
+      "type": "object"
+    },
+    "policy_parameters": {
+      "additionalProperties": true,
+      "title": "Policy Parameters",
+      "type": "object"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    },
+    "original_run_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Original Run Id"
+    },
+    "original_mode": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Mode"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "omitted_sensitive_data": {
+      "default": "Prompt and response text omitted; structure and validation outcomes retained. Hashes are not anonymization.",
+      "title": "Omitted Sensitive Data",
+      "type": "string"
+    },
+    "clock_domain": {
+      "default": "client-monotonic-relative",
+      "title": "Clock Domain",
+      "type": "string"
+    }
+  },
+  "required": [
+    "run_id",
+    "mode",
+    "origin",
+    "experiment",
+    "offered_ids",
+    "created_at_unix_s",
+    "versions"
+  ],
+  "title": "RunManifest",
+  "type": "object"
+}

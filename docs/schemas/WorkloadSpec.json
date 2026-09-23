@@ -1,0 +1,80 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "kind": {
+      "default": "prefix-shift",
+      "enum": [
+        "long-prefix",
+        "short",
+        "prefix-shift",
+        "mixed-burst"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "long_prefix_mode": {
+      "default": "legacy",
+      "enum": [
+        "legacy",
+        "shared",
+        "unique"
+      ],
+      "title": "Long Prefix Mode",
+      "type": "string"
+    },
+    "seed": {
+      "default": 101,
+      "minimum": 0,
+      "title": "Seed",
+      "type": "integer"
+    },
+    "split": {
+      "default": "test",
+      "enum": [
+        "calibration",
+        "tuning",
+        "test"
+      ],
+      "title": "Split",
+      "type": "string"
+    },
+    "rate_rps": {
+      "default": 6,
+      "exclusiveMinimum": 0,
+      "maximum": 500,
+      "title": "Rate Rps",
+      "type": "number"
+    },
+    "injection_s": {
+      "default": 30,
+      "exclusiveMinimum": 0,
+      "maximum": 1800,
+      "title": "Injection S",
+      "type": "number"
+    },
+    "arrival_model": {
+      "default": "open-loop",
+      "enum": [
+        "open-loop",
+        "scripted-session"
+      ],
+      "title": "Arrival Model",
+      "type": "string"
+    },
+    "think_s": {
+      "default": 0.1,
+      "maximum": 60,
+      "minimum": 0,
+      "title": "Think S",
+      "type": "number"
+    }
+  },
+  "title": "WorkloadSpec",
+  "type": "object"
+}

@@ -1,0 +1,76 @@
+{
+  "$defs": {
+    "Capability": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "state": {
+          "enum": [
+            "supported",
+            "unsupported",
+            "unknown"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "evidence": {
+          "default": "none",
+          "enum": [
+            "documented",
+            "contract-tested",
+            "live-verified",
+            "none"
+          ],
+          "title": "Evidence",
+          "type": "string"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "state",
+        "reason"
+      ],
+      "title": "Capability",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "integration_level": {
+      "default": "B",
+      "enum": [
+        "A",
+        "B",
+        "C"
+      ],
+      "title": "Integration Level",
+      "type": "string"
+    },
+    "features": {
+      "additionalProperties": {
+        "$ref": "#/$defs/Capability"
+      },
+      "title": "Features",
+      "type": "object"
+    }
+  },
+  "required": [
+    "features"
+  ],
+  "title": "Capabilities",
+  "type": "object"
+}

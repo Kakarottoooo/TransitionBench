@@ -1,0 +1,74 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "operation_id": {
+      "title": "Operation Id",
+      "type": "string"
+    },
+    "worker_id": {
+      "title": "Worker Id",
+      "type": "string"
+    },
+    "state": {
+      "title": "State",
+      "type": "string"
+    },
+    "at_s": {
+      "minimum": 0,
+      "title": "At S",
+      "type": "number"
+    },
+    "from_config": {
+      "title": "From Config",
+      "type": "string"
+    },
+    "to_config": {
+      "title": "To Config",
+      "type": "string"
+    },
+    "generation": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Generation"
+    },
+    "origin": {
+      "enum": [
+        "synthetic",
+        "measured-black-box",
+        "measured-controlled"
+      ],
+      "title": "Origin",
+      "type": "string"
+    },
+    "detail": {
+      "default": "",
+      "title": "Detail",
+      "type": "string"
+    }
+  },
+  "required": [
+    "operation_id",
+    "worker_id",
+    "state",
+    "at_s",
+    "from_config",
+    "to_config",
+    "origin"
+  ],
+  "title": "TransitionEvent",
+  "type": "object"
+}

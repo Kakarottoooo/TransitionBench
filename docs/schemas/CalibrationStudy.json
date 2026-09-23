@@ -1,0 +1,177 @@
+{
+  "$defs": {
+    "CalibrationTrial": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "capacity",
+            "fixed",
+            "tuning"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "bundle": {
+          "title": "Bundle",
+          "type": "string"
+        },
+        "config_id": {
+          "anyOf": [
+            {
+              "enum": [
+                "A",
+                "B"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Config Id"
+        },
+        "hysteresis": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Hysteresis"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "role",
+        "bundle"
+      ],
+      "title": "CalibrationTrial",
+      "type": "object"
+    },
+    "Hysteresis": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "advantage_fraction": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Advantage Fraction",
+          "type": "number"
+        },
+        "persistence_s": {
+          "maximum": 3600,
+          "minimum": 0,
+          "title": "Persistence S",
+          "type": "number"
+        },
+        "dwell_s": {
+          "maximum": 3600,
+          "minimum": 0,
+          "title": "Dwell S",
+          "type": "number"
+        }
+      },
+      "required": [
+        "advantage_fraction",
+        "persistence_s",
+        "dwell_s"
+      ],
+      "title": "Hysteresis",
+      "type": "object"
+    },
+    "TransitionPair": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source": {
+          "enum": [
+            "A",
+            "B"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "target": {
+          "enum": [
+            "A",
+            "B"
+          ],
+          "title": "Target",
+          "type": "string"
+        },
+        "reference_bundle": {
+          "title": "Reference Bundle",
+          "type": "string"
+        },
+        "transition_bundle": {
+          "title": "Transition Bundle",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "target",
+        "reference_bundle",
+        "transition_bundle"
+      ],
+      "title": "TransitionPair",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "id": {
+      "pattern": "^[A-Za-z0-9_-]{1,80}$",
+      "title": "Id",
+      "type": "string"
+    },
+    "trials": {
+      "items": {
+        "$ref": "#/$defs/CalibrationTrial"
+      },
+      "maxItems": 200,
+      "minItems": 1,
+      "title": "Trials",
+      "type": "array"
+    },
+    "transition_pairs": {
+      "items": {
+        "$ref": "#/$defs/TransitionPair"
+      },
+      "maxItems": 96,
+      "title": "Transition Pairs",
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "trials"
+  ],
+  "title": "CalibrationStudy",
+  "type": "object"
+}

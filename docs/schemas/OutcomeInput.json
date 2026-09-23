@@ -1,0 +1,60 @@
+{
+  "$defs": {
+    "EvidencePair": {
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0",
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "current": {
+          "pattern": "^[a-f0-9]{32}$",
+          "title": "Current",
+          "type": "string"
+        },
+        "candidate": {
+          "pattern": "^[a-f0-9]{32}$",
+          "title": "Candidate",
+          "type": "string"
+        },
+        "transition": {
+          "pattern": "^[a-f0-9]{32}$",
+          "title": "Transition",
+          "type": "string"
+        }
+      },
+      "required": [
+        "current",
+        "candidate",
+        "transition"
+      ],
+      "title": "EvidencePair",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "pairs": {
+      "items": {
+        "$ref": "#/$defs/EvidencePair"
+      },
+      "maxItems": 12,
+      "minItems": 1,
+      "title": "Pairs",
+      "type": "array"
+    }
+  },
+  "required": [
+    "pairs"
+  ],
+  "title": "OutcomeInput",
+  "type": "object"
+}

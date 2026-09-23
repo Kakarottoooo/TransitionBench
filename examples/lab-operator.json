@@ -1,0 +1,26 @@
+{
+  "allowed_origins": ["http://127.0.0.1:8770"],
+  "private_hosts": ["127.0.0.1"],
+  "hook": {
+    "base_url": "http://127.0.0.1:8770",
+    "token_env": "TRANSITIONBENCH_HOOK_TOKEN",
+    "versions": {
+      "engine": "REPLACE_WITH_OBSERVED_IMAGE_DIGEST_AND_VLLM_VERSION",
+      "driver": "REPLACE_WITH_OBSERVED_DRIVER",
+      "model_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+      "tokenizer_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1"
+    }
+  },
+  "configurations": {
+    "A": {"max_num_batched_tokens": 2048, "max_num_seqs": 32},
+    "B": {"max_num_batched_tokens": 4096, "max_num_seqs": 32}
+  },
+  "endpoints": [{
+    "spec": {"id": "owned-lab", "base_url": "http://127.0.0.1:8770/v1",
+      "model": "Qwen/Qwen2.5-3B-Instruct", "key_env": "TRANSITIONBENCH_HOOK_TOKEN",
+      "temperature": 0, "seed": 0, "streaming": true, "timeout_s": 60,
+      "supported_parameters": ["max_tokens", "stream", "temperature", "seed"]},
+    "budget": {"max_requests": 300, "max_total_tokens": 1000000, "max_output_tokens": 32,
+      "max_concurrency": 8, "max_duration_s": 240, "reserved_gpus": 2, "max_reserved_gpu_seconds": 480}
+  }]
+}

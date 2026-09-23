@@ -1,0 +1,26 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "bundle_ids": {
+      "items": {
+        "pattern": "^[a-f0-9]{32}$",
+        "type": "string"
+      },
+      "maxItems": 36,
+      "minItems": 3,
+      "title": "Bundle Ids",
+      "type": "array"
+    }
+  },
+  "required": [
+    "bundle_ids"
+  ],
+  "title": "ImportedEvidence",
+  "type": "object"
+}

@@ -1,0 +1,13 @@
+{
+  "machine_hourly_usd": 2.18,
+  "spending_limit_usd": 15,
+  "non_compute_allowance_usd": 2,
+  "experiment": {
+    "mode": "CONTROLLED_ROLLOUT",
+    "workload": {"kind": "short", "rate_rps": 6, "injection_s": 30},
+    "observation_s": 40,
+    "drain_s": 10,
+    "budget": {"max_requests": 500, "max_total_tokens": 2000000, "max_output_tokens": 32,
+      "max_duration_s": 120, "reserved_gpus": 2, "max_reserved_gpu_seconds": 240}
+  }
+}
