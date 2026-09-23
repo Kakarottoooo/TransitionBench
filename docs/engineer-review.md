@@ -1,6 +1,6 @@
 # A five-minute engineering review
 
-For a no-install first look, open the [public recorded-case demo](https://transitionbench-demo.ziweiguo.chatgpt.site). It shows the frozen predictions, independent outcomes and evidence downloads. Follow the local workflow below to import evidence and compute a review yourself.
+For a no-install first look, open the [public recorded-case demo](https://transitionbench-demo.ziweiguo.chatgpt.site). It shows the frozen predictions, held-out outcomes and evidence downloads. Follow the local workflow below to import evidence and compute a review yourself.
 
 ## 1. Start with the decision
 
@@ -12,19 +12,19 @@ Install the [release](https://github.com/Kakarottoooo/TransitionBench/releases/t
 
 Select **Try the measured GPU case**. The tool imports nine calibration bundles, pairs current/candidate/transition runs and validates the contract. Show the lifetime assumption: 120 seconds. The frozen calibration predicts 700 additional qualified completions. Change it to 40 seconds: 60 additional completions. At 20 seconds the calibration predicts zero and recommends waiting.
 
-These are conditional estimates from calibration, not new GPU results. Historical measurements are subject to a 30-day freshness limit; once expired, use the recorded independent table and standard-library verifier, or bring fresh evidence. Do not change evidence timestamps.
+These are conditional estimates from calibration, not new GPU results. Historical measurements are subject to a 30-day freshness limit; once expired, use the recorded held-out table and standard-library verifier, or bring fresh evidence. Do not change evidence timestamps.
 
 ## 3. Show the concrete correction
 
-“The original evaluator waited for a warm-up-complete marker. The independent trials showed 62–86 extra qualified completions within 40 seconds, before that marker at roughly 49–52 seconds. I changed the accounting to count the whole transition, then checked the correction on held-out seeds.”
+“The original evaluator waited for a warm-up-complete marker. The held-out trials showed 62–86 extra qualified completions within 40 seconds, before that marker at roughly 49–52 seconds. I changed the accounting to count the whole transition, then checked the correction on held-out seeds.”
 
 The keep baseline was zero qualified completions. This supports the accounting correction, not a policy advantage over immediate switching. Twenty-second WAIT did not avoid an observed loss.
 
 ## 4. Make the evidence inspectable
 
-Show **independent measured validation** separately from the interactive forecast. Run the [standalone verifier](../scripts/verify_prospective_v4.py) against the release's sealed ZIP. It checks raw events, forecast freeze ordering and all nine seed/window comparisons without a GPU or application dependencies.
+Show the **held-out measured results** separately from the interactive forecast. Run the [standalone verifier](../scripts/verify_prospective_v4.py) against the release's sealed ZIP. It checks raw events, forecast freeze ordering and all nine seed/window comparisons without a GPU or application dependencies.
 
-Checksums establish consistency, not independent authentication of the measurement environment. Ordinary quality failures, lateness and drops count as zero useful service; missing experimental arms are missing, not zero-throughput observations.
+Checksums establish consistency, not independent authentication of the measurement environment. The verifier shares some archived scoring logic. See the [coverage and verification limits](results.md#evidence-coverage-and-verification-limits); the other research tables are not verified by this ZIP. Ordinary quality failures, lateness and drops count as zero useful service; missing experimental arms are missing, not zero-throughput observations.
 
 ## 5. Explain where it fits
 

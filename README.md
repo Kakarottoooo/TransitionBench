@@ -8,7 +8,7 @@ The analysis workflow is read-only: your serving system keeps deployment authori
 
 **[Open the public demo](https://transitionbench-demo.ziweiguo.chatgpt.site)** · **[Install v0.4.4](https://github.com/Kakarottoooo/TransitionBench/releases/tag/v0.4.4)** · **[Five-minute walkthrough](docs/engineer-review.md)** · **[Connect request logs](docs/external-logs.md)** · **[中文](README.zh-CN.md)**
 
-The public demo needs no login or installation. Explore the frozen 20/40/120-second predictions, all three independent outcomes and the evidence downloads. It displays a recorded case, not fresh advice; it accepts no uploads and makes no model calls. [Demo source](public-demo/) is included here. The complete review/import/observe workflow runs in the local tool below.
+The public demo needs no login or installation. Explore the frozen 20/40/120-second predictions, all three held-out outcomes and the evidence downloads. It displays a recorded case, not fresh advice; it accepts no uploads and makes no model calls. [Demo source](public-demo/) is included here. The complete review/import/observe workflow runs in the local tool below.
 
 ![Deployment review showing a conditional recommendation and measured validation](docs/images/deployment-review.png)
 
@@ -21,11 +21,11 @@ python -m pip install https://github.com/Kakarottoooo/TransitionBench/releases/d
 transitionbench serve --port 8765 --data-dir .transitionbench
 ```
 
-Open **http://127.0.0.1:8765/?view=deployment** and select **Try the measured GPU case**. Nine real calibration bundles are included. Import, pairing, evidence checks and calculations run locally. Changing the assumed useful lifetime recomputes a conditional recommendation; it does not change the recorded independent test results.
+Open **http://127.0.0.1:8765/?view=deployment** and select **Try the measured GPU case**. Nine real calibration bundles are included. Import, pairing, evidence checks and calculations run locally. Changing the assumed useful lifetime recomputes a conditional recommendation; it does not change the recorded held-out test results.
 
 The other application views include simulation and separately authorized execution capabilities. The deployment-review walkthrough neither runs a model nor deploys a configuration. The service binds to loopback; this is not a hosted multi-tenant SaaS.
 
-**Evidence freshness is enforced.** The sample was measured on September 22, 2026. Its interactive review allows a maximum age of 30 days; after that, new advice is correctly refused. Dates are never refreshed to make old measurements look current. The recorded test table and independent arithmetic verification below remain usable. For a real decision, import fresh matched measurements.
+**Evidence freshness is enforced.** The sample was measured on September 22, 2026. Its interactive review allows a maximum age of 30 days; after that, new advice is correctly refused. Dates are never refreshed to make old measurements look current. The recorded test table and arithmetic verification below remain usable. For a real decision, import fresh matched measurements.
 
 ## What the real case demonstrates
 
@@ -53,7 +53,7 @@ Download [the sealed evidence ZIP](https://github.com/Kakarottoooo/TransitionBen
 python verify_prospective_v4.py TransitionBench-prospective-v4-evidence.zip verified-v4
 ```
 
-Only Python's standard library is required. `verified-v4` must be new. The verifier checks the sealed archive and its 346 members, recomputes all nine trials from raw requests, verifies the frozen forecasts, and checks nine seed/window outcomes. It writes `verified-v4/verification.json`. This checks recorded arithmetic and integrity; it is not an independent GPU rerun or hardware attestation.
+Only Python's standard library is required. `verified-v4` must be new. The verifier checks the sealed archive and its 346 members, recomputes all nine trials from raw requests, verifies the frozen forecasts, and checks nine seed/window outcomes. It writes `verified-v4/verification.json`. This checks recorded arithmetic and integrity; it is not an independent GPU rerun or hardware attestation. The verifier reuses the archived qualification predicate and forecast-arithmetic checker; it is not a fully independent implementation and can share their errors. Freeze ordering is checked against recorded timestamps, not a third-party timestamp attestation. Held-out means new test seeds excluded from calibration and the evaluator correction; the author collected both datasets. See the [evidence coverage map](docs/results.md#evidence-coverage-and-verification-limits) for the separate studies not included in this ZIP.
 
 Archive SHA256:
 
@@ -68,7 +68,7 @@ Current / candidate / actual transition measurements
     → import and validate evidence
     → review a caller-specified horizon
     → save forecast and assumptions
-    → observe independent matched evidence
+    → observe held-out matched evidence
     → inspect prediction error or incompatibility
 ```
 
@@ -91,6 +91,6 @@ To rebuild the frontend, run `npm ci` and `npm run build` in `web/`. Vite writes
 
 ## Scope
 
-Delivered: installable software, a local web application, explicit evidence interfaces, a measured accounting correction, and independently recomputable records. Not established: general policy superiority, production reliability, Wafer adoption or integration, or completion of the original broad multi-GPU research plan.
+Delivered: installable software, a local web application, explicit evidence interfaces, a measured accounting correction, and records recomputable from sealed raw requests. Not established: general policy superiority, production reliability, Wafer adoption or integration, or completion of the original broad multi-GPU research plan.
 
 The public release is curated for review. The sealed historical archive is kept unchanged, including original technical path strings and negative outcomes. It contains synthetic benchmark payloads, not customer requests. Private billing records, credentials, environments, weights and unrelated diagnostic workspace files are excluded.
