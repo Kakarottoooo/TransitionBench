@@ -4,7 +4,9 @@
 
 这是一个早期部署评估开发者工具，有本地网页、Python/HTTP/CLI接口、逐请求日志适配和证据复算。它根据匹配的当前配置、候选配置及真实切换记录，计算指定时间内的累计合格服务净差，保存预测，再检查后续独立记录是否支持预测。部署权限仍属于原服务系统。
 
-从[英文首页](README.md)开始；[Release](https://github.com/Kakarottoooo/TransitionBench/releases/tag/v0.4.4)提供安装包、封存证据和标准库复算脚本。试用已有案例无需GPU、API key或Wafer配合。
+直接打开[公开 Demo](https://transitionbench-demo.ziweiguo.chatgpt.site)，无需登录或安装，可切换三个已记录窗口，查看预测、实测、负结果和证据下载。网站只展示历史案例，不生成实时建议、不接收上传、不调用模型；[页面源码](public-demo/)可核查。
+
+从[英文首页](README.md)了解完整工具；[Release](https://github.com/Kakarottoooo/TransitionBench/releases/tag/v0.4.4)提供安装包、封存证据和标准库复算脚本。自己的数据导入、评估及反馈继续在本地运行。试用已有案例无需GPU、API key或Wafer配合。
 
 已证明的具体成果是：修复将“预热完成”错误地当成有效服务起点的问题，并用三组新的匹配实验核验。40秒窗口的实测净增为84、86、62条，而声明预热完成在约49–52秒。该案例保持配置的合格完成为零，不能算百分比提升，也不能称为偿还先前负亏损。
 

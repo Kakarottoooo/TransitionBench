@@ -5,9 +5,11 @@ test('compute, inspect, import, replay and handle errors without external calls'
   const errors:string[]=[];
   const external:string[]=[];
   page.on('pageerror',e=>errors.push(e.message));
-  page.on('request',r=>{if(!r.url().startsWith('http://127.0.0.1:8765'))external.push(r.url());});
+  page.on('request',r=>{if(new URL(r.url()).origin!==new URL(test.info().project.use.baseURL!).origin)external.push(r.url());});
   await page.goto('/');
-  await expect(page.getByRole('heading',{name:'Should we deploy the faster configuration now?'})).toBeVisible();
+  await expect(page.getByRole('heading',{name:'Is this configuration change worth deploying?'})).toBeVisible();
+  await expect(page.getByRole('navigation',{name:'Main views'}).getByRole('button').first()).toHaveText('Evaluate Deployment');
+  await page.getByRole('button',{name:'Understand',exact:true}).click();
   await expect(page.getByRole('heading',{name:'The answer starts with a run.'})).toBeVisible();
   await page.getByRole('button',{name:'Compare four policies'}).click();
   await expect(page.getByRole('status',{name:'Experiment status'})).toContainText('Four runs computed',{timeout:30000});
@@ -40,6 +42,7 @@ test('narrow viewport, keyboard navigation and cancellation',async({page})=>{
   await page.goto('/');
   await page.keyboard.press('Tab');
   await expect(page.getByRole('link',{name:'TransitionBench home'})).toBeFocused();
+  await page.getByRole('button',{name:'Understand',exact:true}).click();
   await page.getByRole('combobox',{name:'Workload',exact:true}).selectOption('short');
   await page.getByRole('button',{name:'Compare four policies'}).click();
   await page.getByRole('button',{name:'Cancel run',exact:true}).click();

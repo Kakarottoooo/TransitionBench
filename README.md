@@ -6,7 +6,9 @@ TransitionBench is an early developer tool for evaluating inference configuratio
 
 The analysis workflow is read-only: your serving system keeps deployment authority. The included recorded case runs without a GPU, a provider key, or access to anyone's private infrastructure.
 
-**[Install v0.4.4](https://github.com/Kakarottoooo/TransitionBench/releases/tag/v0.4.4)** · **[Five-minute walkthrough](docs/engineer-review.md)** · **[Connect request logs](docs/external-logs.md)** · **[中文](README.zh-CN.md)**
+**[Open the public demo](https://transitionbench-demo.ziweiguo.chatgpt.site)** · **[Install v0.4.4](https://github.com/Kakarottoooo/TransitionBench/releases/tag/v0.4.4)** · **[Five-minute walkthrough](docs/engineer-review.md)** · **[Connect request logs](docs/external-logs.md)** · **[中文](README.zh-CN.md)**
+
+The public demo needs no login or installation. Explore the frozen 20/40/120-second predictions, all three independent outcomes and the evidence downloads. It displays a recorded case, not fresh advice; it accepts no uploads and makes no model calls. [Demo source](public-demo/) is included here. The complete review/import/observe workflow runs in the local tool below.
 
 ![Deployment review showing a conditional recommendation and measured validation](docs/images/deployment-review.png)
 
