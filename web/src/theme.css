@@ -61,3 +61,4 @@
 }
 @media(max-width:400px){.app-surface main{padding:27px 14px 0}.app-surface h1{font-size:30px}.review-metrics{grid-template-columns:1fr}.review-metrics>div{display:flex;align-items:center;justify-content:space-between;gap:15px}.review-metrics span{margin:0;max-width:19ch}.review-card,.review-proof{padding:22px 18px}}
 @media(prefers-reduced-motion:reduce){.app-surface *{transition:none!important;animation:none!important}}
+.app-surface .setup-intro a,.app-surface .setup-intro .text-button{color:inherit;text-decoration:underline;text-underline-offset:3px}

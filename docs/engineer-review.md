@@ -1,5 +1,7 @@
 # A five-minute engineering review
 
+For a no-install first look, open the [public recorded-case demo](https://transitionbench-demo.neat-ash-5002.chatgpt.site). It shows the frozen predictions, independent outcomes and evidence downloads. Follow the local workflow below to import evidence and compute a review yourself.
+
 ## 1. Start with the decision
 
 “I built TransitionBench to evaluate whether a proposed inference deployment adds useful service within the time available. It includes the restart and recovery period, not only the candidate's steady-state throughput.”

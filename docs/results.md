@@ -49,4 +49,4 @@ A CPU-only mechanism review subsequently found unequal legacy warm/cold history 
 - A measured accounting correction and raw-data recomputation path.
 - Preserved counterexamples and failed hypotheses, including a simpler policy performing better.
 
-Not claimed: a new caching algorithm; generally superior StateAware decisions; a fully validated broad multi-GPU deployment policy; Wafer integration, adoption, production savings or hiring outcome. The public UI is local, not a hosted production service.
+Not claimed: a new caching algorithm; generally superior StateAware decisions; a fully validated broad multi-GPU deployment policy; Wafer integration, adoption, production savings or hiring outcome. The [public demo](https://transitionbench-demo.neat-ash-5002.chatgpt.site) displays the recorded case only. The full evaluation application runs locally; no production evaluation service is hosted.

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TransitionBench — Is this change worth deploying?</title>
+  <meta name="description" content="Explore a recorded inference deployment evaluation. Compare frozen predictions with measured service gains, inspect the limits, and independently verify the evidence.">
+  <meta name="theme-color" content="#090b0a">
+  <link rel="icon" href="./mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css"><script type="module" src="./app.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to case study</a>
+<aside class="sidebar">
+  <a class="brand" href="#main" aria-label="TransitionBench home"><img src="./mark.svg" width="36" height="40" alt=""><span>transition<span>bench</span></span></a>
+  <nav aria-label="Case navigation"><a href="#review">Deployment review</a><a href="#evidence">Inspect evidence</a><a href="#integrate">Use your own data</a></nav>
+  <div class="sidebar-end"><a href="https://github.com/Kakarottoooo/TransitionBench">Source on GitHub <span aria-hidden="true">↗</span></a><p>A recorded case.<br>No model calls.</p></div>
+</aside>
+<main id="main">
+  <header class="hero"><span class="recorded">Recorded GPU case · September 22, 2026</span><h1>Is this configuration change <br>worth deploying?</h1><p>Inspect the estimate, the transition and what actually happened.</p></header>
+  <section id="review" aria-labelledby="review-heading">
+    <h2 id="review-heading" class="sr-only">Deployment review</h2>
+    <div class="contract"><div><span>Current A → candidate B</span><strong>Enable vLLM prefix caching</strong></div><p>One RTX 3080 Ti · same 2,048-token scheduling budget<br>8 requests/s · sustained shared-prefix workload</p></div>
+    <div class="window-control"><div><strong>Observation window after switch</strong><p>Three recorded windows of the same sustained traffic.</p></div><div class="windows" role="group" aria-label="Recorded observation window"><button type="button" data-horizon="20" aria-pressed="false" disabled>20 s</button><button type="button" data-horizon="40" aria-pressed="true" disabled>40 s</button><button type="button" data-horizon="120" aria-pressed="false" disabled>120 s</button></div></div>
+    <div id="load-error" role="alert" hidden><h3>The case data could not be loaded.</h3><p>Reload this page or <a href="https://github.com/Kakarottoooo/TransitionBench/blob/main/docs/results.md">read the recorded results on GitHub</a>.</p></div>
+    <div class="review-card" id="case-result" aria-busy="true">
+      <div class="result-heading"><h2 id="advice">Loading recorded evidence…</h2><span class="tag">Frozen before the test</span></div>
+      <p class="result-summary" id="summary" role="status" aria-live="polite"></p>
+      <div class="metrics"><div><strong id="prediction">—</strong><span>predicted net completions</span></div><div><strong id="observed">—</strong><span>observed net range · 3 seeds</span></div><div><strong id="crossing">—</strong><span>observed first positive gain</span></div></div>
+      <p class="metric-definition">Net = qualified completions during the transition − qualified completions if A is kept, from the same trigger time.</p>
+      <div class="comparison"><h3>What happened within this window?</h3><p>Mean qualified completions across three matched seeds. Each action was a separate run.</p><div id="bars" class="bars"></div></div>
+      <p class="scope-note" id="window-note"></p>
+    </div>
+    <p class="historical">You are exploring sealed historical results, not requesting a live deployment recommendation. No GPU, provider key or login is required.</p>
+  </section>
+  <section class="finding" aria-labelledby="finding-heading"><div><h2 id="finding-heading">Useful service started<br>before warm-up ended.</h2><p>The original evaluator waited for a lifecycle marker. The corrected evaluator counts the entire transition, including useful service before that marker.</p></div><div class="finding-facts"><p><strong>30–33 s</strong><span>first positive cumulative gain observed</span></p><p><strong>49–52 s</strong><span>declared warm-up completion</span></p></div></section>
+  <section id="evidence" class="evidence" aria-labelledby="evidence-heading"><div class="section-heading"><h2 id="evidence-heading">Follow every result back to its evidence.</h2><p>9/9 complete trials · 10,800 offered requests · 3 matched seeds</p></div>
+    <div class="table-scroll" tabindex="0" aria-label="Results by seed; scroll horizontally on small screens"><table><caption id="table-caption">Recorded outcomes</caption><thead><tr><th scope="col">Seed</th><th scope="col">Frozen net</th><th scope="col">Observed net</th><th scope="col">Error, observed − predicted</th><th scope="col">Declared warm-up end</th></tr></thead><tbody id="seed-rows"></tbody></table></div>
+    <div class="limits"><h3>What this case establishes—and what it does not</h3><ul><li>It supports an accounting correction: service before declared warm-up completion must count.</li><li>Keeping A produced zero qualified completions. First positive gain is not repayment of an observed negative balance; percentage uplift would be misleading.</li><li>The advice tied immediate switching. WAIT at 20 seconds did not avoid a measured loss. Already running B is a different initial condition.</li><li>These are three nested windows of one synthetic workload, not three scenarios. Three seeds are not a confidence guarantee.</li><li>APC is an existing vLLM optimization. This is not evidence of StateAware superiority or Wafer production gains.</li></ul></div>
+    <details><summary>Why the simpler strategy matters</summary><p>In an earlier, separate 36-trial study, immediate switching completed 239–253 more qualified requests than a cost-aware rule under sustained traffic. Those runs are not pooled with this case. Later state-aware research did not establish an advantage over strong simple baselines.</p><a href="https://github.com/Kakarottoooo/TransitionBench/blob/main/docs/results.md">Read all results, including negative findings</a></details>
+    <div class="downloads"><a class="button" href="https://github.com/Kakarottoooo/TransitionBench/releases/download/v0.4.4/TransitionBench-prospective-v4-evidence.zip">Download sealed evidence</a><a href="./result.json" download>Recorded results JSON</a><a href="https://github.com/Kakarottoooo/TransitionBench/releases/download/v0.4.4/verify_prospective_v4.py">Standalone verifier</a></div>
+    <details><summary>Independently recompute without a GPU</summary><p>Download the evidence ZIP and verifier into the same directory, then run with Python. The output directory must be new.</p><pre><code>python verify_prospective_v4.py TransitionBench-prospective-v4-evidence.zip verified-v4</code></pre><p>Checks all 346 archive members, raw request arithmetic and frozen forecasts. This verifies recorded consistency, not an independent GPU rerun.</p><p>Evidence ZIP SHA256:</p><code class="hash">d445b19c1b7b9e9dff384a442d8697ce9bc57dd9be181b25512cdea278158849</code></details>
+  </section>
+  <section id="integrate" class="integration" aria-labelledby="integration-heading"><h2 id="integration-heading">Your measurements.<br>Your deployment authority.</h2><p>Upstream tools propose a configuration. TransitionBench reviews matched current, candidate and actual-transition evidence, saves the estimate, then compares later measurements with it.</p><p>Use at least three matched calibration seeds and a supported observation window. Existing request logs need explicit timestamps, quality/SLO results and run metadata. Missing evidence is rejected, not guessed.</p><div class="downloads"><a class="button" href="https://github.com/Kakarottoooo/TransitionBench#try-it-locally">Run the full tool locally</a><a href="https://github.com/Kakarottoooo/TransitionBench/blob/main/docs/external-logs.md">Connect existing logs</a><a href="https://github.com/Kakarottoooo/TransitionBench/blob/main/docs/deployment-review.md">HTTP / Python / CLI contract</a></div><p class="historical">The public demo displays recorded results only. Data import, new reviews and outcome feedback run in the local tool; this website accepts no uploads.</p></section>
+  <footer><span>TransitionBench · an early deployment-review tool</span><span>Independent project. No official Wafer affiliation.</span></footer>
+</main>
+</body>
+</html>
