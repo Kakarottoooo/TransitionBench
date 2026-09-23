@@ -1,6 +1,6 @@
 # A five-minute engineering review
 
-For a no-install first look, open the [public recorded-case demo](https://transitionbench-demo.neat-ash-5002.chatgpt.site). It shows the frozen predictions, independent outcomes and evidence downloads. Follow the local workflow below to import evidence and compute a review yourself.
+For a no-install first look, open the [public recorded-case demo](https://transitionbench-demo.ziweiguo.chatgpt.site). It shows the frozen predictions, independent outcomes and evidence downloads. Follow the local workflow below to import evidence and compute a review yourself.
 
 ## 1. Start with the decision
 
