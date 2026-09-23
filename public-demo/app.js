@@ -19,12 +19,12 @@ function render(horizon) {
     button.setAttribute('aria-pressed', String(Number(button.dataset.horizon) === horizon));
   }
   $('#advice').textContent = rows[0].action === 'WAIT' ? 'Recorded advice: wait' : 'Recorded advice: switch';
-  $('#summary').textContent = `At ${horizon} seconds, the frozen estimate was ${prediction} net qualified completions. Independent observations were ${net.join(', ')}.`;
+  $('#summary').textContent = `At ${horizon} seconds, the frozen estimate was ${prediction} net qualified completions. Held-out observations were ${net.join(', ')}.`;
   $('#prediction').textContent = format(prediction);
   $('#observed').textContent = min === max ? format(min) : `${format(min)}–${format(max)}`;
   $('#crossing').textContent = crossing.length ? `${Math.min(...crossing)}–${Math.max(...crossing)} s` : 'Not yet observed';
   $('#window-note').textContent = notes[horizon];
-  $('#table-caption').textContent = `${horizon}-second window · all three independent seeds`;
+  $('#table-caption').textContent = `${horizon}-second window · all three held-out seeds`;
   $('#seed-rows').replaceChildren(...rows.map(row => {
     const tr = document.createElement('tr');
     [row.seed, row.predicted_net, row.measured_switch_minus_keep, (row.error > 0 ? '+' : '') + row.error, format(row.declared_transition_complete_s) + ' s'].forEach((value, index) => {

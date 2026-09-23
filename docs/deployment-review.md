@@ -36,7 +36,7 @@ definition. The historical model below describes 0.4.0, not new advice.
 
 ## Independent validation and 0.4.2 delivery
 
-The unchanged 0.4.1 evaluator was frozen before three new seeds (7931–7933): all nine GPU trials completed. Observed net gain was 0/0/0 at 20 seconds, 84/86/62 at 40 seconds, and 724/727/703 at 120 seconds, against frozen predictions 0/60/700. First positive cumulative gain occurred at 30/30/33 seconds versus calibrated 34 seconds. Keeping A yielded zero qualified completions; this does not demonstrate recovery from an actual negative balance. Advice tied immediate switching. Version 0.4.2 packages the existing method with a restrained deployment view and downloadable independent results; it changes no scoring logic. See [the final delivery](results.md). No customer cooperation is needed to run the included case or independently recompute evidence.
+The unchanged 0.4.1 evaluator was frozen before three new seeds (7931–7933): all nine GPU trials completed. Observed net gain was 0/0/0 at 20 seconds, 84/86/62 at 40 seconds, and 724/727/703 at 120 seconds, against frozen predictions 0/60/700. First positive cumulative gain occurred at 30/30/33 seconds versus calibrated 34 seconds. Keeping A yielded zero qualified completions; this does not demonstrate recovery from an actual negative balance. Advice tied immediate switching. Version 0.4.2 packages the existing method with a restrained deployment view and downloadable held-out results; it changes no scoring logic. See [the final delivery](results.md). No customer cooperation is needed to run the included case or recompute sealed evidence.
 
 ## Try the actual product
 
@@ -105,7 +105,7 @@ transitionbench proposal-get PROPOSAL_ID
 transitionbench proposal-outcome PROPOSAL_ID outcome.json --key outcome-001
 ```
 
-`outcome.json` contains `{"pairs": [{"current": "BUNDLE_ID", "candidate": "BUNDLE_ID", "transition": "BUNDLE_ID"}]}`. IDs must come from newly imported independent matched runs; reusing calibration run IDs or seeds is rejected as a comparable outcome. Outcomes append without rewriting the forecast. A changed model, workload, quality checker, SLO, configuration or declared resource context produces `NOT_COMPARABLE`, with the gaps retained for inspection.
+`outcome.json` contains `{"pairs": [{"current": "BUNDLE_ID", "candidate": "BUNDLE_ID", "transition": "BUNDLE_ID"}]}`. IDs must come from newly imported held-out matched runs; reusing calibration run IDs or seeds is rejected as a comparable outcome. Outcomes append without rewriting the forecast. A changed model, workload, quality checker, SLO, configuration or declared resource context produces `NOT_COMPARABLE`, with the gaps retained for inspection.
 
 ## Exporting from a different evaluator
 
@@ -122,17 +122,17 @@ The actual transition trace must contain one `STOPPING` and one later `COMPLETE`
 
 ## What the review verifies
 
-The release includes a sealed independent study archive. Recompute it without installing the application:
+The release includes a sealed held-out study archive. Recompute it without installing the application:
 
 ```sh
 python scripts/verify_prospective_v4.py TransitionBench-prospective-v4-evidence.zip verified-v4
 ```
 
-Download the archive from the [release](https://github.com/Kakarottoooo/TransitionBench/releases/tag/v0.4.4). The standard-library script verifies archive and member hashes, raw trial arithmetic, frozen forecasts and nine matched outcome windows. This is a consistency check, not metadata authentication or an independent GPU rerun.
+Download the archive from the [release](https://github.com/Kakarottoooo/TransitionBench/releases/tag/v0.4.4). The standard-library script verifies archive and member hashes, raw trial arithmetic, frozen forecasts and nine matched outcome windows. This is a consistency check, not metadata authentication or an independent GPU rerun. The verifier reuses the archived qualification predicate and forecast-arithmetic checker; it is not a fully independent implementation and can share their errors. Freeze ordering is checked against recorded timestamps, not a third-party timestamp attestation. Held-out means new test seeds excluded from calibration and the evaluator correction; the author collected both datasets. See [evidence coverage](results.md#evidence-coverage-and-verification-limits).
 
 Imported checksums and original summaries are independently reverified on every new evaluation. The evaluator then checks pairing, separate seeds, freshness, configuration roles and context. It reconstructs qualified rates from raw events with the full offered denominator. For the retained legacy rate-model diagnostic, the modeled rate difference uses the smaller of fixed-candidate and transitioned tail rates, minus current rate. It uses the smallest paired difference and largest observed deficit, then subtracts the operator's extra loss allowance for admission. These extrema are not confidence bounds or a worst-case guarantee.
 
-An independent outcome reports cumulative transitioned-minus-current qualified completions over the assumed horizon, forecast error, and an observed cumulative repayment bound at one-second resolution (legacy forecasts retain their original post-COMPLETE restriction). The nonnegative tail is limited to the observed remainder; no inference beyond it is made. Separate trials are not an observed production counterfactual.
+A held-out outcome reports cumulative transitioned-minus-current qualified completions over the assumed horizon, forecast error, and an observed cumulative repayment bound at one-second resolution (legacy forecasts retain their original post-COMPLETE restriction). The nonnegative tail is limited to the observed remainder; no inference beyond it is made. Separate trials are not an observed production counterfactual.
 
 All write requests require `X-TransitionBench: 1`; proposals/outcomes additionally require `Idempotency-Key`. The loopback service keeps existing execution approval boundaries unchanged. Recommendations confer no rollout authority. The current product does not automatically observe distribution drift or a running production service: integration code must present the current context and submit fresh matched outcome evidence.
 
